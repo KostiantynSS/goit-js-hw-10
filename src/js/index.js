@@ -15,7 +15,15 @@ breedSelector.insertAdjacentHTML('beforeend', createMarkup(breed)))).catch(conso
 
 
 function onBreedChoose(e){const breedId = breedSelector.value
-    fetchCatByBreed(breedId).then(resp => console.dir(resp)).catch(console.error())
+    fetchCatByBreed(breedId)
+    .then(resp => {
+        const cat = resp[0].breeds[0]
+        container.innerHTML = `<img src="${resp[0].url}" alt="${cat.name}" width="${resp[0].width}" height="${resp[0].height}">
+        <p>${cat.name}</p>
+        <p>${cat.description}</p>
+        <p>${cat.temperament}</p>`})
+       
+    .catch(console.error())
    
     // const selectedBreed = breedSelector.options[breedSelector.options.selectedIndex]
     // console.dir(selectedBreed)
