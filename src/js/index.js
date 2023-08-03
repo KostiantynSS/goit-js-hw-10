@@ -5,20 +5,21 @@ axios.defaults.baseURL = 'https://api.thecatapi.com/v1'
 
 const breedSelector = document.querySelector('.breed-select')
 const container = document.querySelector('.cat-info')
-
+export const loader = document.querySelector('.loader')
+export const error = document.querySelector('.error')
 breedSelector.addEventListener('input', onBreedChoose)
 
 const createMarkup = breed =>`<option value="${breed.id}">${breed.name}</option>`;
 
-fetchBreeds().then(resp => resp.map(breed => 
-breedSelector.insertAdjacentHTML('beforeend', createMarkup(breed)))).catch(console.error())
+fetchBreeds().then(resp => { resp.map(breed => 
+breedSelector.insertAdjacentHTML('beforeend', createMarkup(breed)))}).catch(console.error())
 
 
 function onBreedChoose(e){const breedId = breedSelector.value
     fetchCatByBreed(breedId)
     .then(resp => {
         const cat = resp[0].breeds[0]
-        container.innerHTML = `<img src="${resp[0].url}" alt="${cat.name}" width="${resp[0].width}" height="${resp[0].height}">
+        container.innerHTML = `<img src="${resp[0].url}" alt="${cat.name}" width="300px" height="300px">
         <p>${cat.name}</p>
         <p>${cat.description}</p>
         <p>${cat.temperament}</p>`})
