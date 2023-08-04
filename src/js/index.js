@@ -15,11 +15,13 @@ fetchBreeds().then(resp => { resp.map(breed =>
 breedSelector.insertAdjacentHTML('beforeend', createMarkup(breed)))}).catch(console.error())
 
 
-function onBreedChoose(e){const breedId = breedSelector.value
+function onBreedChoose(){container.innerHTML = ''
+    loader.hidden = false;
+    const breedId = breedSelector.value
     fetchCatByBreed(breedId)
     .then(resp => {
         const cat = resp[0].breeds[0]
-        container.innerHTML = `<img src="${resp[0].url}" alt="${cat.name}" width="300px" height="300px">
+        container.innerHTML = `<div class="img-wrp"><img src="${resp[0].url}" alt="${cat.name}" ></div>
         <p>${cat.name}</p>
         <p>${cat.description}</p>
         <p>${cat.temperament}</p>`})

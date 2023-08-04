@@ -1,0 +1,13 @@
+.img-wrp {
+  
+    height: 300px;
+}
+img { display: block;
+    height: 100%;
+    width: 100%;
+object-fit: contain;
+}
+.loader {
+    font-weight: 700;
+}
+.error {color: red;}
