@@ -5,31 +5,36 @@ axios.defaults.baseURL = 'https://api.thecatapi.com/v1'
 
 const breedSelector = document.querySelector('.breed-select')
 const container = document.querySelector('.cat-info')
-export const loader = document.querySelector('.loader')
-export const error = document.querySelector('.error')
+const loader = document.querySelector('.loader')
+const error = document.querySelector('.error')
 breedSelector.addEventListener('input', onBreedChoose)
 
 const createMarkup = breed =>`<option value="${breed.id}">${breed.name}</option>`;
 
-fetchBreeds().then(resp => { resp.map(breed => 
-breedSelector.insertAdjacentHTML('beforeend', createMarkup(breed)))}).catch(console.error())
+fetchBreeds()
+.then(resp => {breedSelector.hidden =false; error.hidden = true; resp.map(breed => 
+breedSelector.insertAdjacentHTML('beforeend', createMarkup(breed)))})
+.catch(()=>{body.innerHTML = '';
+    error.hidden = false})
 
 
-function onBreedChoose(){container.innerHTML = ''
+function onBreedChoose(){container.innerHTML = '';
+error.hidden = true
     loader.hidden = false;
     const breedId = breedSelector.value
     fetchCatByBreed(breedId)
-    .then(resp => {
+    .then(resp => {loader.hidden = true;
         const cat = resp[0].breeds[0]
-        container.innerHTML = `<div class="img-wrp"><img src="${resp[0].url}" alt="${cat.name}" ></div>
+        container.innerHTML = 
+        `<div class="img-wrp"><img src="${resp[0].url}" alt="${cat.name}" ></div>
         <p>${cat.name}</p>
         <p>${cat.description}</p>
-        <p>${cat.temperament}</p>`})
+        <p>${cat.temperament}</p>`;
+        })
        
-    .catch(console.error())
+        .catch(()=>{body.innerHTML = '';
+        error.hidden = false})
    
-    // const selectedBreed = breedSelector.options[breedSelector.options.selectedIndex]
-    // console.dir(selectedBreed)
 }
-
+export {loader, error}
 
