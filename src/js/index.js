@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
-
+import SlimSelect from 'slim-select'
+import 'slim-select/dist/slimselect.css'
+new SlimSelect({
+  select: '#single',
+  data: [{ text: 'Value 1', value: 'value1' }]
+})
 axios.defaults.headers.common['x-api-key'] = 'live_flQsdmawXVHOEszZKd0VDFO3Nlsnte0OFf9SJwDCYz8Cq2lt0EpZwPMk51cGmD3e';
 axios.defaults.baseURL = 'https://api.thecatapi.com/v1'
 
@@ -40,5 +45,5 @@ error.hidden = true
         .catch(()=>{loader.hidden = true; error.hidden = false})
    
 }
-export {loader, error}
+export {loader}
 
